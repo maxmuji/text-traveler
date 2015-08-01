@@ -1,39 +1,53 @@
 package com.maxmuji.texttraveler;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
+public class SplashActivity extends FragmentActivity {
 
-public class SplashActivity extends ActionBarActivity {
+    /** Duration of wait **/
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
 
+    /** Called when the activity is first created. */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        //setContentView(R.layout.splashscreen);
+
+        // Warn the user about sms charges
+        showAlertDialog();
+
+        /* New Handler to start the Menu-Activity
+         * and close this Splash-Screen after some seconds.*/
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+                //Intent mainIntent = new Intent(SplashActivity.this,Menu.class);
+                //SplashActivity.this.startActivity(mainIntent);
+                //SplashActivity.this.finish();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    /** Shows the sms alert */
+    private void showAlertDialog(){
+        DialogFragment smsAlertFragment = new SmsAlertDialogFragment();
+        smsAlertFragment.show(getFragmentManager(), "sms_alert");
+    }
+
+    /** Sends the first text. */
+    public void sendLocation(){
+        GPSInterface gps = new GPSInterface(this.getApplicationContext());
+        //TODO: handle gps disabled situation
+        double latitude = gps.getLatitude();
+        double longitude = gps.getLongitude();
+        Log.i("TextTraveler_SplashActivity", "Latitude = " + latitude);
+        Log.i("TextTraveler_SplashActivity", "Longitude = " + longitude);
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_splash, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">TextTraveler</string>
+    <string name="sms_warning">This app sends SMS messages. Carrier charges may apply.</string>
+    <string name="accept">Accept</string>
+    <string name="exit">Exit</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
