@@ -12,6 +12,7 @@ import android.os.Bundle;
  */
 public class SmsAlertDialogFragment extends DialogFragment{
 
+    // TODO: What happens when user clicks outside of the dialog box?
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
