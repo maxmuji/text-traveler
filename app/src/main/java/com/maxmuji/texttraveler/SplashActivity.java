@@ -1,15 +1,18 @@
 package com.maxmuji.texttraveler;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 public class SplashActivity extends FragmentActivity {
 
     // Duration of wait
     private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final String TAG = "TextTraveler_SplashActivity";
+    private SmsReceiver receiver;
 
     // Called when the activity is first created.
     @Override
@@ -20,17 +23,6 @@ public class SplashActivity extends FragmentActivity {
         // Warn the user about sms charges
         showAlertDialog();
 
-        // New Handler to start the Menu-Activity
-        // and close this Splash-Screen after some seconds.
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                // Create an Intent that will start the Menu-Activity. */
-                //Intent mainIntent = new Intent(SplashActivity.this,Menu.class);
-                //SplashActivity.this.startActivity(mainIntent);
-                //SplashActivity.this.finish();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
     }
 
     // Shows the sms alert
@@ -62,8 +54,20 @@ public class SplashActivity extends FragmentActivity {
         SmsMailman locSender = new SmsMailman();
         String message = "GPS" + latitude + " " + longitude;
         locSender.send(message, this.getApplicationContext());
+        Log.v(TAG, "Waiting for response");
 
+        receiver = new SmsReceiver(this);
     }
+
+    public void setResponse(String response) {
+
+        Log.v(TAG, "Response message:" + response);
+
+        //Start the main activity
+        Intent i = new Intent(getApplicationContext(), ItemListActivity.class);
+        startActivity(i);
+    }
+
 
     //TODO: Handle rotation
 

@@ -2,6 +2,7 @@ package com.maxmuji.texttraveler;
 
 import android.content.Context;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -11,6 +12,9 @@ public class SmsMailman {
 
     // TODO: Ideally we want better solution here than google voice number
     private final String defaultNum = "6193560672";
+    private final String TAG = "TextTraveler_SmsMailman";
+
+    private String response = null;
 
     public void send(String phoneNo, String message, Context context) {
 
@@ -24,10 +28,20 @@ public class SmsMailman {
                     Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+        Log.v(TAG, "Text message sent: " + message);
+        //new GetSMSTask().execute();
+
     }
 
     public void send(String message, Context context) {
         this.send(defaultNum,message,context);
     }
+
+
+    public String getResponse() {
+        return response;
+    }
+
+
 
 }

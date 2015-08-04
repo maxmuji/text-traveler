@@ -36,7 +36,7 @@ public class GPSInterface implements LocationListener{
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                 loc = locationManager.getLastKnownLocation(provider);
             }
-            // TODO: When gps is disabled and reenabled, app has to be recompiled to work
+            // TODO: BUG - When gps is disabled and reenabled, app has to be recompiled to work
             latitude = loc.getLatitude();
             longitude = loc.getLongitude();
             return true;
